@@ -17,6 +17,7 @@ export default function App() {
     setCourseGoal(currentCourseGoals => [...currentCourseGoals, {
       text: enteredGoalText, id: Math.random().toString()
     }])
+    endAddGoalHandler()
   }
 
   function deleteGoalHandler(id) {
@@ -29,14 +30,18 @@ export default function App() {
     setModalIsVisible(true)
   }
 
+  function endAddGoalHandler(){
+    setModalIsVisible(false)
+  }
+
   return (
     <View style={styles.appContainer}>
       <Button title='Add New Goalr' color='#5e0acc' onPress={startAddGoalHandler} />
-      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
+      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} onCancel={endAddGoalHandler}/>
       <View style={styles.goalsContainer}>
         <FlatList data={courseGoals} renderItem={itemData => {
           return (
-            <GoalItem id={itemData.item.id} text={itemData.item.text} onDeleteItem={deleteGoalHandler} />
+            <GoalItem id={itemData.item.id} text={itemData.item.text} onDeleteItem={deleteGoalHandler}/>
           );
         }} keyExtractor={
           (item, index) => {
